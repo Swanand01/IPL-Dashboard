@@ -141,6 +141,7 @@ elif page == 'Player Dashboard':
     st.header('Player Dashboard')
     player  = st.selectbox('Select a player', player_tuple)
     season = st.selectbox('Select season', season_tuple)
+    season_avg = deliveries[(deliveries['batsman'] == player) & (deliveries['season'] == season)]['batsman_runs'].sum()
     record = player_data[player_data['player'] == player]
     catch_record = wickets[(wickets['dismissal_kind'] == 'caught') & (wickets['fielder'] == player)]
     run_out_record = wickets[(wickets['dismissal_kind'] == 'run out') & (wickets['fielder'] == player)]
@@ -154,7 +155,10 @@ elif page == 'Player Dashboard':
         else:
             st.write('Total runs: ', deliveries[(deliveries['season'] == season) & (deliveries['batsman'] == player)]['batsman_runs'].sum())
     with col2:
-        st.write('Average: ', round(record['average'].values[0]))
+        if season == 'All':
+            st.write('Average: ', round(record['average'].values[0]))
+        else:
+            st.write('Average: ', season_avg)
 
     with col1:
         st.write('Strike rate: ', round(record['strikerate'].values[0]))
