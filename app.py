@@ -141,7 +141,7 @@ elif page == 'Player Dashboard':
     st.header('Player Dashboard')
     player  = st.selectbox('Select a player', player_tuple)
     season = st.selectbox('Select season', season_tuple)
-    season_avg = deliveries[(deliveries['batsman'] == player) & (deliveries['season'] == season)]['batsman_runs'].sum()
+    season_avg = (deliveries[(deliveries['batsman'] == player) & (deliveries['season'] == season)]['batsman_runs'].sum()) / len(deliveries[(deliveries['batsman'] == 'V Kohli') & (deliveries['season'] == 'IPL-2014')]['match_id'].unique())
     record = player_data[player_data['player'] == player]
     catch_record = wickets[(wickets['dismissal_kind'] == 'caught') & (wickets['fielder'] == player)]
     run_out_record = wickets[(wickets['dismissal_kind'] == 'run out') & (wickets['fielder'] == player)]
